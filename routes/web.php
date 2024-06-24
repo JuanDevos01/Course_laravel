@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\JobController;
 use App\Http\Controllers\PostController;
 use App\Models\JobModel;
 use App\Models\Post;
@@ -11,43 +12,22 @@ Route::get('/', function () {
     return view('home');
 });
 
-Route::get('/jobs', function () {
-    $jobs = JobModel::with('employer')->latest()-> paginate(5);
-    return view('jobs/index', [
-        'jobs' => $jobs
-    ]);
-});
-Route::get('/jobs/create', function(){
-    return view('jobs.create');
-});
-
-Route::post('/jobs', function(){
-    // validation
-    request()->validate([
-        'title' => ['required', 'min:3'],
-        'salary' => ['required']
-    ]);
-    JobModel::create([
-        'title'=> request('title'),
-        'salary'=> request('salary'),
-        'employer_id'=> 1,
-    ]);
-    return redirect('/jobs');
-});
-
-Route::get('/job/{id}', function ($id) {
-    $job = App\Models\JobModel::find($id);
-    return view('jobs.show', ['job' => $job]);
-});
-
-Route::get('/jobs/{id}/edit', function ($id) {
-    $job = App\Models\JobModel::find($id);
-    return view('jobs.edit', ['job' => $job]);
-});
+// Route::get('/jobs', [JobController::class, 'index']);
+// Route::get('/jobs/create', [JobController::class, 'create']);
+// Route::post('/jobs', [JobController::class, 'store']);
+// Route::get('/jobs/{job}', [JobController::class, 'show']);
+// Route::get('/jobs/{id}/edit', [JobController::class, 'edit']);
+// Route::patch('/jobs/{id}', [JobController::class, 'update']);
+// Route::delete('/jobs/{job}', [JobController::class, 'destroy']);
+//Todo esto se puede hacer con este resource por si solo
+Route::resource('jobs', JobController::class);
 
 Route::get('/contact', function () {
     return view('contact');
 });
+
+
+Route::view('/contact', 'contact');
 ////////////////////////////////////////////////////////////////
 
 Route::get('/prueba', function(){
