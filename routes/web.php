@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\RegisteredUserController;
+use App\Http\Controllers\SessionController;
 use App\Models\JobModel;
 use App\Models\Post;
 use Illuminate\Support\Arr;
@@ -22,11 +24,20 @@ Route::get('/', function () {
 //Todo esto se puede hacer con este resource por si solo
 Route::resource('jobs', JobController::class);
 
+
+
+
+Route::get('/register', [RegisteredUserController::class, 'create']);
+Route::post('/register', [RegisteredUserController::class, 'store']);
+
+Route::get('/login', [SessionController::class, 'create']);
+Route::post('/login', [SessionController::class, 'store']);
+Route::post('/logout', [SessionController::class, 'destroy']);
+
 Route::get('/contact', function () {
     return view('contact');
 });
-
-
+//Forma mas resummida si es view
 Route::view('/contact', 'contact');
 ////////////////////////////////////////////////////////////////
 
