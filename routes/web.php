@@ -6,9 +6,13 @@ use App\Http\Controllers\JobController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\RegisteredUserController;
 use App\Http\Controllers\SessionController;
+use App\Mail\JobPosted;
 use App\Models\JobModel;
 use App\Models\Post;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Mail;
+
+
 
 Route::get('/', function () {
     return view('home');
