@@ -12,7 +12,12 @@ use App\Models\Post;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Mail;
 
-
+Route::get('test', function () {
+    dispatch(function(){
+        logger('hello form the queue');
+    });
+    return 'Done';
+});
 
 Route::get('/', function () {
     return view('home');
